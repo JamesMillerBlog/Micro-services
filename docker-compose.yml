@@ -1,0 +1,35 @@
+version: "3"
+services:
+  nginx:
+    build: ./web/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - home
+  home:
+    build: ./web/home
+    volumes:
+      - "./web/home:/usr/src/app"
+    ports:
+      - "4000:4000"
+    # env_file: .env
+    command: gulp
+    # mongodb:
+    #   image: mongo:latest
+    #   volumes:
+    #     - "./web/mongo/data/db:/data/db/"
+  redis:
+    image: "redis:alpine"
+
+  # command: bash -c "npm update && npm install"
+    
+
+  # to start: docker-compose up
+
+  # Docker Commands:
+    # command: node ./dist/index.js
+    # docker stop $(docker ps -a -q)
+    # docker rm $(docker ps -a -q)
+    # docker rmi $(docker images -a -q)
+
+
