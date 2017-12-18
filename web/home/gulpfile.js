@@ -15,7 +15,7 @@ const sass = require('gulp-sass');
 
 // Development dependencies
 const browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
+const reload = browserSync.reload;
 const nodemon = require('gulp-nodemon');
 const runSequence = require('run-sequence');
 
@@ -31,8 +31,9 @@ gulp.task('default', function(callback){
 gulp.task('watch', function(){
 	gulp.watch('host/views/*.pug', reload);
 	gulp.watch('host/*.js', ['serverRestart']);
-	gulp.watch('host/routes/*.js', ['serverFolderRestart']);
-	gulp.watch('host/config/*.js', ['serverFolderRestart']);
+	gulp.watch('host/routes/*.js', ['serverRoutesRestart']);
+	gulp.watch('host/config/*.js', ['serverConfigRestart']);
+	gulp.watch('host/sockets/*.js', ['serverSocketsRestart']);
 	gulp.watch('client/app/public/js/**/*.js', ['es6']);
 	gulp.watch('client/app/public/js/libs/*.js', ['jslibs']);
 	gulp.watch('client/app/public/scss/**/*.scss', ['sass']);
@@ -40,15 +41,31 @@ gulp.task('watch', function(){
 
 gulp.task('serverRestart', function(){
 	return gulp.src('host/*.js')
-	.pipe(gulp.dest(''))
+	.pipe(gulp.dest('host'))
 	.pipe(browserSync.reload({
 		stream: true
 	})); //build folder
 });
 
-gulp.task('serverFolderRestart', function(){
-	return gulp.src('host/**/*.js')
-	.pipe(gulp.dest(''))
+gulp.task('serverRoutesRestart', function(){
+	return gulp.src('host/routes/*.js')
+	.pipe(gulp.dest('host/routes'))
+	.pipe(browserSync.reload({
+		stream: true
+	})); //build folder
+});
+
+gulp.task('serverConfigRestart', function(){
+	return gulp.src('host/config/*.js')
+	.pipe(gulp.dest('host/config'))
+	.pipe(browserSync.reload({
+		stream: true
+	})); //build folder
+});
+
+gulp.task('serverSocketsRestart', function(){
+	return gulp.src('host/sockets/*.js')
+	.pipe(gulp.dest('host/sockets'))
 	.pipe(browserSync.reload({
 		stream: true
 	})); //build folder
