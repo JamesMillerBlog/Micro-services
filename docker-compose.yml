@@ -5,21 +5,29 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - home
-  home:
-    build: ./web/home
+      - home-app
+      - accounts-api
+  home-app:
+    build: ./web/home/app
     volumes:
-      - "./web/home:/usr/src/app"
+      - "./web/home/app:/usr/src/app"
+    # env_file: .env
     ports:
       - "4000:4000"
-    # env_file: .env
     command: gulp
-    # mongodb:
-    #   image: mongo:latest
-    #   volumes:
-    #     - "./web/mongo/data/db:/data/db/"
-  redis:
-    image: "redis:alpine"
+  accounts-api:
+    build: ./web/accounts/api
+    volumes:
+      - "./web/accounts/api:/usr/src/app"
+    depends_on:
+      - accounts-db
+    command: npm start
+  accounts-db:
+    image: mongo:latest
+    volumes:
+      - "./web/accounts/mongo/data/db:/data/db/"
+  # redis:
+  #   image: "redis:alpine"
 
   # command: bash -c "npm update && npm install"
     

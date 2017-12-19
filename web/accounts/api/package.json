@@ -1,0 +1,28 @@
+{
+  "name": "accountsAPI",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "8.2.1",
+    "npm": "5.4.2"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js"    
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.6",
+    "nodemon": "^1.12.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.8.2"
+  }
+}
