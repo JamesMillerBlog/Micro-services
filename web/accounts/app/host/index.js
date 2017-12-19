@@ -19,6 +19,6 @@ app.use(express.static(__dirname + '/../client/build'));
 require('./services/sockets/setup')(io);
 
 //** SET HOME ROUTE **//
-require('./routes/homeRoutes')(app);
+require('./routes/accountRoutes')(app);
 
 http.listen(process.env.PORT || 3000);

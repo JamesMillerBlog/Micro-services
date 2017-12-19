@@ -1,5 +1,7 @@
 version: "3"
 services:
+
+
   nginx:
     build: ./web/nginx
     ports:
@@ -7,14 +9,29 @@ services:
     depends_on:
       - home-app
       - accounts-api
+
+
   home-app:
     build: ./web/home/app
     volumes:
       - "./web/home/app:/usr/src/app"
+    depends_on:
+      - redis
     # env_file: .env
+    command: gulp
+
+  accounts-app:
+    build: ./web/accounts/app
+    volumes:
+      - "./web/accounts/app:/usr/src/app"
+    depends_on:
+      - redis
+    # env_file: .env
+    command: gulp
     ports:
       - "4000:4000"
-    command: gulp
+
+
   accounts-api:
     build: ./web/accounts/api
     volumes:
@@ -22,12 +39,15 @@ services:
     depends_on:
       - accounts-db
     command: npm start
+
+
   accounts-db:
     image: mongo:latest
     volumes:
       - "./web/accounts/mongo/data/db:/data/db/"
-  # redis:
-  #   image: "redis:alpine"
+
+  redis:
+    image: "redis:alpine"
 
   # command: bash -c "npm update && npm install"
     
@@ -39,5 +59,3 @@ services:
     # docker stop $(docker ps -a -q)
     # docker rm $(docker ps -a -q)
     # docker rmi $(docker images -a -q)
-
-

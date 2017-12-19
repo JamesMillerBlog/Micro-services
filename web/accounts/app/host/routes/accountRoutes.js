@@ -1,9 +1,9 @@
 
 module.exports = (app) => {	
-	app.get('/', function(req, res) {    
+	app.get('/signin', function(req, res) {    
 		// sess.email=req.body.email;
 		if(!req.user) {
-		    res.render('content', { title : 'Home'} )
+		    res.render('signin')
 		    // TO DO: render all gallery images from all users
 		}
 		// else render this users gallery images

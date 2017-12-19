@@ -34,7 +34,6 @@ gulp.task('watch', function(){
 	gulp.watch('host/routes/*.js', ['serverRoutesRestart']);
 	gulp.watch('host/config/*.js', ['serverConfigRestart']);
 	gulp.watch('host/services/sockets/*.js', ['serverSocketsRestart']);
-	gulp.watch('host/services/session/*.js', ['serverSessionRestart']);
 	gulp.watch('client/src/js/**/*.js', ['es6']);
 	gulp.watch('client/src/js/libs/*.js', ['jslibs']);
 	gulp.watch('client/src/scss/**/*.scss', ['sass']);
@@ -67,14 +66,6 @@ gulp.task('serverConfigRestart', function(){
 gulp.task('serverSocketsRestart', function(){
 	return gulp.src('host/services/sockets/*.js')
 	.pipe(gulp.dest('host/services/sockets'))
-	.pipe(browserSync.reload({
-		stream: true
-	})); //build folder
-});
-
-gulp.task('serverSessionRestart', function(){
-	return gulp.src('host/services/session/*.js')
-	.pipe(gulp.dest('host/services/session'))
 	.pipe(browserSync.reload({
 		stream: true
 	})); //build folder
