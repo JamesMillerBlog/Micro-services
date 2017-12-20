@@ -28,8 +28,8 @@ services:
       - redis
     # env_file: .env
     command: gulp
-    ports:
-      - "4000:4000"
+    # ports:
+    #   - "4000:4000"
 
 
   accounts-api:
@@ -39,12 +39,14 @@ services:
     depends_on:
       - accounts-db
     command: npm start
+    # ports:
+    #   - "3000:3000"
 
 
   accounts-db:
     image: mongo:latest
     volumes:
-      - "./web/accounts/mongo/data/db:/data/db/"
+      - "./web/accounts/db/mongo/data:/mongo/data"
 
   redis:
     image: "redis:alpine"

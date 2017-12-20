@@ -11,7 +11,7 @@ module.exports = (app) => {
 	// secret is used for cookie handling
 	app.use(session({
 		secret: keys.sessionSecret,
-		store: new redisStore({ host: 'redis', port: keys.redisPort, client: client,ttl :  260}),
+		store: new redisStore({ host: keys.redisHost, port: keys.redisPort, client: client,ttl :  260}),
 		resave: false,
 	    saveUninitialized: false
 	}));

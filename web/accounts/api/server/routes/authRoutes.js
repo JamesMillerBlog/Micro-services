@@ -1,6 +1,10 @@
 const passport = require('passport');
 
 module.exports = (app) => {
+	// when user comes to this route
+	// use passport to authenticate with 'google' (google string == google strategy within the passport library)
+	// the arguements is an array containing profile and email
+	// these are the two pieces of information we are requesting from google
 	app.get(
 		'/auth/google', 
 		passport.authenticate('google', {
@@ -8,11 +12,13 @@ module.exports = (app) => {
 		})
 	);
 	
+	// once the user has allowed the app to access profile and email details
+	// pass the authentication code from google into passport
 	app.get(
 		'/auth/google/callback', 
 		passport.authenticate('google'),
 		(req, res) => {
-			res.redirect('/surveys');
+			res.redirect('/');
 		}
 	);
 	

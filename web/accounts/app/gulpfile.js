@@ -34,9 +34,9 @@ gulp.task('watch', function(){
 	gulp.watch('host/routes/*.js', ['serverRoutesRestart']);
 	gulp.watch('host/config/*.js', ['serverConfigRestart']);
 	gulp.watch('host/services/sockets/*.js', ['serverSocketsRestart']);
-	gulp.watch('client/src/js/**/*.js', ['es6']);
-	gulp.watch('client/src/js/libs/*.js', ['jslibs']);
-	gulp.watch('client/src/scss/**/*.scss', ['sass']);
+	gulp.watch('client/src/accounts/js/**/*.js', ['es6']);
+	gulp.watch('client/src/accounts/js/libs/*.js', ['jslibs']);
+	gulp.watch('client/src/accounts/scss/**/*.scss', ['sass']);
 });
 
 gulp.task('serverRestart', function(){
@@ -73,20 +73,20 @@ gulp.task('serverSocketsRestart', function(){
 
 //task to optimise images + put them in dist folder
 gulp.task('images', function(){
-	return gulp.src('client/src/assets/**/*.+(png|jpg|gif|svg|mp4|ogv|ogg)')
+	return gulp.src('client/src/accounts/assets/**/*.+(png|jpg|gif|svg|mp4|ogv|ogg)')
 	.pipe(cache(imagemin({
 		interlaced: true
 	})))
-	.pipe(gulp.dest('client/build/assets/'))
+	.pipe(gulp.dest('client/build/accounts/assets/'))
 });
 
 gulp.task('fonts', function(){
-	return gulp.src('client/src/assets/fonts/**/*')
-	.pipe(gulp.dest('client/build/assets/fonts/'))
+	return gulp.src('client/src/accounts/assets/fonts/**/*')
+	.pipe(gulp.dest('client/build/accounts/assets/fonts/'))
 });
 
 gulp.task('es6', function() { //transform all code into es2015 format
-	browserify('client/src/js/bundle.min.js') //take all code from index.js
+	browserify('client/src/accounts/js/bundle.min.js') //take all code from index.js
 	.transform('babelify', { //transform the code using the es2015 preset
 		presets: ['es2015'],
 	})
@@ -94,25 +94,25 @@ gulp.task('es6', function() { //transform all code into es2015 format
 	.pipe(source('bundle.min.js')) //bundle into a new file name
 	.pipe(buffer()) //put all new code into
 	// .pipe(uglify()) //minifies code
-	.pipe(gulp.dest('client/build/js/'))
+	.pipe(gulp.dest('client/build/accounts/js/'))
 	.pipe(browserSync.reload({
 		stream: true
 	})) //build folder
 });
 
 gulp.task('jslibs', function(){
-	return gulp.src('client/src/js/libs/*.js')
+	return gulp.src('client/src/accounts/js/libs/*.js')
 	.pipe(concat('libs.min.js'))
 	// .pipe(uglify()) //minifies code
-	.pipe(gulp.dest('client/build/js/libs/'));
+	.pipe(gulp.dest('client/build/accounts/js/libs/'));
 })
 
 //task to turn sass into css and then reload browser
 gulp.task('sass', function(){
-	return gulp.src('client/src/scss/**/*.scss')
+	return gulp.src('client/src/accounts/scss/**/*.scss')
 	.pipe(sass())
 	.pipe(concatCss('styles.min.css'))
-    .pipe(gulp.dest('client/build/css/'))
+    .pipe(gulp.dest('client/build/accounts/css/'))
     .pipe(browserSync.reload({
 		stream: true
 	}))
