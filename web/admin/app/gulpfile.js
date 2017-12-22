@@ -34,9 +34,9 @@ gulp.task('watch', function(){
 	gulp.watch('host/routes/*.js', ['routesRestart']);
 	gulp.watch('host/config/*.js', ['configRestart']);
 	gulp.watch('host/services/*.js', ['servicesRestart']);
-	gulp.watch('client/src/js/**/*.js', ['es6']);
-	gulp.watch('client/src/js/libs/*.js', ['jslibs']);
-	gulp.watch('client/src/scss/**/*.scss', ['sass']);
+	gulp.watch('client/src/admin/js/**/*.js', ['es6']);
+	gulp.watch('client/src/admin/js/libs/*.js', ['jslibs']);
+	gulp.watch('client/src/admin/scss/**/*.scss', ['sass']);
 });
 
 gulp.task('serverRestart', function(){
@@ -65,7 +65,7 @@ gulp.task('configRestart', function(){
 
 gulp.task('servicesRestart', function(){
 	return gulp.src('host/services/*.js')
-	.pipe(gulp.dest('host/services'))
+	.pipe(gulp.dest('host/services/'))
 	.pipe(browserSync.reload({
 		stream: true
 	})); //build folder
@@ -73,20 +73,20 @@ gulp.task('servicesRestart', function(){
 
 //task to optimise images + put them in dist folder
 gulp.task('images', function(){
-	return gulp.src('client/src/assets/**/*.+(png|jpg|gif|svg|mp4|ogv|ogg)')
+	return gulp.src('client/src/admin/assets/**/*.+(png|jpg|gif|svg|mp4|ogv|ogg)')
 	.pipe(cache(imagemin({
 		interlaced: true
 	})))
-	.pipe(gulp.dest('client/build/assets/'))
+	.pipe(gulp.dest('client/build/admin/assets/'))
 });
 
 gulp.task('fonts', function(){
-	return gulp.src('client/src/assets/fonts/**/*')
-	.pipe(gulp.dest('client/build/assets/fonts/'))
+	return gulp.src('client/src/admin/assets/fonts/**/*')
+	.pipe(gulp.dest('client/build/admin/assets/fonts/'))
 });
 
 gulp.task('es6', function() { //transform all code into es2015 format
-	browserify('client/src/js/bundle.min.js') //take all code from index.js
+	browserify('client/src/admin/js/bundle.min.js') //take all code from index.js
 	.transform('babelify', { //transform the code using the es2015 preset
 		presets: ['es2015'],
 	})
@@ -94,25 +94,25 @@ gulp.task('es6', function() { //transform all code into es2015 format
 	.pipe(source('bundle.min.js')) //bundle into a new file name
 	.pipe(buffer()) //put all new code into
 	// .pipe(uglify()) //minifies code
-	.pipe(gulp.dest('client/build/js/'))
+	.pipe(gulp.dest('client/build/admin/js/'))
 	.pipe(browserSync.reload({
 		stream: true
 	})) //build folder
 });
 
 gulp.task('jslibs', function(){
-	return gulp.src('client/src/js/libs/*.js')
+	return gulp.src('client/src/admin/js/libs/*.js')
 	.pipe(concat('libs.min.js'))
 	// .pipe(uglify()) //minifies code
-	.pipe(gulp.dest('client/build/js/libs/'));
+	.pipe(gulp.dest('client/build/admin/js/libs/'));
 })
 
 //task to turn sass into css and then reload browser
 gulp.task('sass', function(){
-	return gulp.src('client/src/scss/**/*.scss')
+	return gulp.src('client/src/admin/scss/**/*.scss')
 	.pipe(sass())
 	.pipe(concatCss('styles.min.css'))
-    .pipe(gulp.dest('client/build/css/'))
+    .pipe(gulp.dest('client/build/admin/css/'))
     .pipe(browserSync.reload({
 		stream: true
 	}))

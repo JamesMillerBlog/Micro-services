@@ -14,11 +14,6 @@ footer {
   text-align: center;
 }
 
-.googleSignin {
-  width: auto;
-  height: 50px;
-}
-
 .hideElement {
   display: none;
 }

@@ -2,3 +2,6 @@ extend index
 block content
   p
     | Welcome to the home microservice.
+
+  a.login.hideElement(href='/auth/google')
+      img.googleSignin(src='/assets/googleSignin.png', alt='Google sign in')

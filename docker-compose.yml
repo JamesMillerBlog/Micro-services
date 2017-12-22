@@ -8,24 +8,20 @@ services:
       - "80:80"
     depends_on:
       - home-app
-      - accounts-api
+      - admin-app
 
 
   home-app:
     build: ./web/home/app
     volumes:
       - "./web/home/app:/usr/src/app"
-    depends_on:
-      - redis
     # env_file: .env
     command: gulp
 
-  accounts-app:
-    build: ./web/accounts/app
+  admin-app:
+    build: ./web/admin/app
     volumes:
-      - "./web/accounts/app:/usr/src/app"
-    depends_on:
-      - redis
+      - "./web/admin/app:/usr/src/app"
     # env_file: .env
     command: gulp
     # ports:
@@ -38,6 +34,7 @@ services:
       - "./web/accounts/api:/usr/src/app"
     depends_on:
       - accounts-db
+      - accounts-redis
     command: npm start
     # ports:
     #   - "3000:3000"
@@ -46,9 +43,12 @@ services:
   accounts-db:
     image: mongo:latest
     volumes:
-      - "./web/accounts/db/mongo/data:/mongo/data"
+      - "./web/accounts/mongo/data/db:/data/db"
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=admin
+    #   - MONGO_INITDB_ROOT_PASSWORD=admin
 
-  redis:
+  accounts-redis:
     image: "redis:alpine"
 
   # command: bash -c "npm update && npm install"
