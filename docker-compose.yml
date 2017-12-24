@@ -3,7 +3,7 @@ services:
 
 
   nginx:
-    build: ./web/nginx
+    build: ./web/load-balancer/nginx
     ports:
       - "80:80"
     depends_on:
@@ -12,16 +12,16 @@ services:
 
 
   home-app:
-    build: ./web/home/app
+    build: ./web/ui-services/home/app
     volumes:
-      - "./web/home/app:/usr/src/app"
+      - "./web/ui-services/home/app:/usr/src/app"
     # env_file: .env
     command: gulp
 
   admin-app:
-    build: ./web/admin/app
+    build: ./web/admin-services/admin/app
     volumes:
-      - "./web/admin/app:/usr/src/app"
+      - "./web/admin-services/admin/app:/usr/src/app"
     # env_file: .env
     command: gulp
     # ports:
@@ -29,27 +29,36 @@ services:
 
 
   accounts-api:
-    build: ./web/accounts/api
+    build: ./web/api-services/accounts/api
     volumes:
-      - "./web/accounts/api:/usr/src/app"
+      - "./web/api-services/accounts/api:/usr/src/app"
     depends_on:
       - accounts-db
       - accounts-redis
     command: npm start
-    # ports:
-    #   - "3000:3000"
+    ports:
+      - "3000:3000"
+
+  # accounts-db-interface:
+  #   build: ./web/api-services/accounts/admin-interface
+  #   ports:
+  #     - "8081:8081"
+  #   env_file: ./web/api-services/accounts/admin-interface/.env
+    # command: mongo-express
 
 
   accounts-db:
     image: mongo:latest
     volumes:
-      - "./web/accounts/mongo/data/db:/data/db"
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=admin
-    #   - MONGO_INITDB_ROOT_PASSWORD=admin
+      - "./web/api-services/accounts/mongo/data/db:/data/db"
+    env_file: ./web/api-services/accounts/mongo/.env
 
   accounts-redis:
     image: "redis:alpine"
+    volumes:
+      - "./web/api-services/accounts/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+    command: redis-server /usr/local/etc/redis/redis.conf
+
 
   # command: bash -c "npm update && npm install"
     

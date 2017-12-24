@@ -3,3 +3,4 @@ db
 mongod.log
 .env
 dev.js
+redis.conf
