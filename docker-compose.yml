@@ -12,9 +12,9 @@ services:
 
 
   home-app:
-    build: ./web/ui-services/home/app
+    build: ./web/app-services/home/app
     volumes:
-      - "./web/ui-services/home/app:/usr/src/app"
+      - "./web/app-services/home/app:/usr/src/app"
     # env_file: .env
     command: gulp
 
@@ -38,13 +38,6 @@ services:
     command: npm start
     ports:
       - "3000:3000"
-
-  # accounts-db-interface:
-  #   build: ./web/api-services/accounts/admin-interface
-  #   ports:
-  #     - "8081:8081"
-  #   env_file: ./web/api-services/accounts/admin-interface/.env
-    # command: mongo-express
 
 
   accounts-db:
