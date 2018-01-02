@@ -5,6 +5,7 @@ export let checkLogin = () => {
         'type': "GET",
         'url': "/api/current_user",
         'success': (data) => {
+            // console.log(data);
         	user_data.id = data._id,
         	user_data.name = data.googleName
         }

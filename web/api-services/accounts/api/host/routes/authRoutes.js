@@ -28,6 +28,10 @@ module.exports = (app) => {
 	});
 
 	app.get('/api/current_user', (req, res) => {
+		// console.log("WORKING lol!?");
+		// console.log(req.session);
+		// console.log("auth req headers");
+		// console.log(req.headers);
 		res.send(req.user);
 	});
 	

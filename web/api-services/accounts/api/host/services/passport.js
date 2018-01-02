@@ -19,6 +19,7 @@ passport.serializeUser((user, done) => {
 // deserialise the id
 passport.deserializeUser((id, done) => {
 	// console.log("DESERIALIZE USER ID");
+	// console.log(id);
 	// search the id of the user in the mongo db
 	User.findById(id)
 	// return the users account that is associated with that id

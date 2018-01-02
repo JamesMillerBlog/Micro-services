@@ -19,9 +19,9 @@ services:
     command: gulp
 
   admin-app:
-    build: ./web/admin-services/admin/app
+    build: ./web/app-services/admin/app
     volumes:
-      - "./web/admin-services/admin/app:/usr/src/app"
+      - "./web/app-services/admin/app:/usr/src/app"
     # env_file: .env
     command: gulp
     # ports:
@@ -36,8 +36,8 @@ services:
       - accounts-db
       - accounts-redis
     command: npm start
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
 
 
   accounts-db:

@@ -1,9 +1,8 @@
 const request = require('request');
 
 module.exports = (app) => {	
-	
-	app.get('/', function(req, res) {  
-	    var options = {
+	app.get('/admin', function(req, res) {
+		var options = {
 	    	'url':'http://localhost/api/current_user',
 			'proxy':'http://nginx',
 			headers: {
@@ -15,9 +14,12 @@ module.exports = (app) => {
 			function (error, response, body) {
 			    if (!error) {
 			    	// console.log("body");
-			     //    console.log(body);
-				    if(body) res.render('content', { title : 'Home'});
-				    else res.render('login');
+				    if(body){ 
+				    	res.render('admin', {
+					        account: JSON.parse(body)
+					    });
+				    }
+				    else res.redirect('/');
 			    }
 			    if (error) {
 			    	// console.log("error");
@@ -25,13 +27,10 @@ module.exports = (app) => {
 			    }
 			}
 		);
-
-
-
-
 	});
 
 	// app.get('*', (req, res) => {
 	//     res.redirect('/');
 	// })
 }
+
