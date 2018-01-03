@@ -5,7 +5,7 @@ module.exports = (app) => {
 	app.get('/', function(req, res) {  
 	    var options = {
 	    	'url':'http://localhost/api/current_user',
-			'proxy':'http://nginx',
+			'proxy':'http://services-load-balancer',
 			headers: {
 				'Cookie': req.headers.cookie
 			}

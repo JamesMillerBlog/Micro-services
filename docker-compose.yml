@@ -1,14 +1,24 @@
 version: "3"
 services:
 
-
-  nginx:
-    build: ./web/load-balancer/nginx
+  services-load-balancer:
+    build: ./web/load-balancers/services
     ports:
       - "80:80"
     depends_on:
+      - app-load-balancer
+      - api-gateway
+
+  app-load-balancer:
+    build: ./web/load-balancers/app
+    depends_on:
       - home-app
       - admin-app
+
+  api-gateway:
+    build: ./web/load-balancers/api
+    depends_on:
+      - accounts-api
 
 
   home-app:
@@ -29,9 +39,9 @@ services:
 
 
   accounts-api:
-    build: ./web/api-services/accounts/api
+    build: ./web/db-services/accounts/api
     volumes:
-      - "./web/api-services/accounts/api:/usr/src/app"
+      - "./web/db-services/accounts/api:/usr/src/app"
     depends_on:
       - accounts-db
       - accounts-redis
@@ -43,13 +53,13 @@ services:
   accounts-db:
     image: mongo:latest
     volumes:
-      - "./web/api-services/accounts/mongo/data/db:/data/db"
-    env_file: ./web/api-services/accounts/mongo/.env
+      - "./web/db-services/accounts/mongo/data/db:/data/db"
+    env_file: ./web/db-services/accounts/mongo/.env
 
   accounts-redis:
     image: "redis:alpine"
     volumes:
-      - "./web/api-services/accounts/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./web/db-services/accounts/redis/redis.conf:/usr/local/etc/redis/redis.conf"
     command: redis-server /usr/local/etc/redis/redis.conf
 
 
