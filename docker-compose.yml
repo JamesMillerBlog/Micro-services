@@ -1,8 +1,8 @@
 version: "3"
 services:
 
-  services-load-balancer:
-    build: ./web/load-balancers/services
+  http-load-balancer:
+    build: ./web/load-balancers/http
     ports:
       - "80:80"
     depends_on:

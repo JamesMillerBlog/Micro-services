@@ -18,6 +18,7 @@ module.exports = (app) => {
 		'/auth/google/callback', 
 		passport.authenticate('google'),
 		(req, res) => {
+			console.log("WORKIGN?!");
 			res.redirect('/admin');
 		}
 	);
