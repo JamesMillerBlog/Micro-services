@@ -2,16 +2,20 @@ const request = require('request');
 
 module.exports = () => {	
 
-	request({
-	'url':'http://localhost/api/current_user',
-	'proxy':'http://http-load-balancer'
+	request.post({
+		'url':'http://localhost/api/test',
+		'proxy':'http://http-load-balancer',
+		form: {
+			test: "lol",
+			two: "lolol"
+		}
 	},
 	function (error, response, body) {
 	    if (!error) {
-	    	console.log("body");
+	    	console.log("body home app");
 	        console.log(body);
-	        console.log("response");
-	        console.log(response);
+	        // console.log("response");
+	        // console.log(response);
 	    }
 	    if (error) {
 	    	console.log("error");

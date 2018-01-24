@@ -1,6 +1,7 @@
 version: "3"
 services:
 
+# LOADBALANCERS / REVERSE PROXIES
   http-load-balancer:
     build: ./web/load-balancers/http
     ports:
@@ -18,9 +19,9 @@ services:
   api-gateway:
     build: ./web/load-balancers/api
     depends_on:
-      - accounts-api
+      - oauth-api
 
-
+# APP SERVICES
   home-app:
     build: ./web/app-services/home/app
     volumes:
@@ -38,6 +39,24 @@ services:
     #   - "4000:4000"
 
 
+# BUSINESS SERVICES
+  oauth-api:
+    build: ./web/business-services/oauth/api
+    volumes:
+      - "./web/business-services/oauth/api:/usr/src/app"
+    depends_on:
+      - oauth-redis
+      - accounts-api
+    command: npm start
+
+  oauth-redis:
+    image: "redis:alpine"
+    volumes:
+      - "./web/db-services/oauth/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+
+# DB SERVICES
   accounts-api:
     build: ./web/db-services/accounts/api
     volumes:
@@ -48,7 +67,6 @@ services:
     command: npm start
     # ports:
     #   - "3000:3000"
-
 
   accounts-db:
     image: mongo:latest

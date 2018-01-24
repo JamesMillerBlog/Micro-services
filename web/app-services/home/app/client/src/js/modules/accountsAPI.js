@@ -3,7 +3,7 @@ export let checkLogin = () => {
     $.ajax({
         'async': false,
         'type': "GET",
-        'url': "/api/current_user",
+        'url': "/auth/current_user",
         'success': (data) => {
             // console.log(data);
         	user_data.id = data._id,

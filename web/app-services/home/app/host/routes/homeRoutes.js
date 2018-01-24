@@ -4,7 +4,7 @@ module.exports = (app) => {
 	
 	app.get('/', function(req, res) {  
 	    var options = {
-	    	'url':'http://localhost/api/current_user',
+	    	'url':'http://localhost/auth/current_user',
 			'proxy':'http://http-load-balancer',
 			headers: {
 				'Cookie': req.headers.cookie
@@ -14,8 +14,8 @@ module.exports = (app) => {
 	    	options,
 			function (error, response, body) {
 			    if (!error) {
-			    	// console.log("body");
-			     //    console.log(body);
+			    	console.log("body");
+			        console.log(body);
 				    if(body) res.render('content', { title : 'Home'});
 				    else res.render('login');
 			    }
@@ -25,10 +25,6 @@ module.exports = (app) => {
 			    }
 			}
 		);
-
-
-
-
 	});
 
 	// app.get('*', (req, res) => {
