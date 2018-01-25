@@ -14,8 +14,6 @@ module.exports = (app) => {
 	    	options,
 			function (error, response, body) {
 			    if (!error) {
-			    	console.log("body");
-			        console.log(body);
 				    if(body) res.render('content', { title : 'Home'});
 				    else res.render('login');
 			    }

@@ -15,9 +15,6 @@ app.use(express.static(__dirname + '/../client/build'));
 //** SETUP SERVICES **//
 require('./services/sockets')(io);
 
-//** GET API REQUESTS **//
-// require('./services/apiRequests')();
-
 //** SET HOME ROUTE **//
 require('./routes/homeRoutes')(app);
 

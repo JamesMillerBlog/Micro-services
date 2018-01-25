@@ -19,8 +19,6 @@ module.exports = (app) => {
 		'/auth/google/callback', 
 		passport.authenticate('google'),
 		(req, res) => {
-			console.log("SEND BACK TO ADMIN");
-			console.log(req.body);
 			res.redirect('/admin');
 		}
 	);
@@ -45,13 +43,9 @@ module.exports = (app) => {
 	    	options,
 			function (error, response, body) {
 			    if (!error) {
-			    	console.log("body");
-			    	console.log(body);
+			    	// return user data from the account service
+			    	// based on deserialized cookie from passport
 					res.send(body);
-		        	// req user based on cookie data
-		        	// !!!!!
-		        	// not returning anything
-		        	// needs to return a USER!!
 			    }
 			    if (error) {
 			    	// console.log("error");
@@ -59,13 +53,6 @@ module.exports = (app) => {
 			    }
 			}
 		);
-	// 	// include cookies with this request
- //    	console.log("COOKIE");
- //    	console.log(cookie);
-	// 	res.send(cookie);
-	// 	// console.log(req.session);
-	// 	// console.log("auth req headers");
-	// 	// console.log(req.headers);
 	});
 	
 	app.get('*', (req, res) => {
