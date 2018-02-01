@@ -18,8 +18,11 @@ services:
 
   api-gateway:
     build: ./web/load-balancers/api
+    volumes:
+      - "./web/load-balancers/api:/usr/src/app"
     depends_on:
       - oauth-api
+    command: npm start
 
 # APP SERVICES
   home-app:
@@ -47,6 +50,8 @@ services:
     depends_on:
       - oauth-redis
       - accounts-api
+    # ports:
+    #   - "3000:3000"
     command: npm start
 
   oauth-redis:

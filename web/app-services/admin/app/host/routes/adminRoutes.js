@@ -4,8 +4,8 @@ module.exports = (app) => {
 	
 	app.get('/admin', function(req, res) {
 		var options = {
-	    	'url':'http://localhost/auth/current_user',
-			'proxy':'http://http-load-balancer',
+	    	'url':'http://oauth-api:3000/auth/current_user',
+			// 'proxy':'http://http-load-balancer',
 			headers: {
 				'Cookie': req.headers.cookie
 			}
@@ -15,13 +15,15 @@ module.exports = (app) => {
 			function (error, response, body) {
 			    if (!error) {
 			    	// if cookies exist
-				    if(body){ 
-				    	//then the user must have an active session
-				    	res.render('admin', {
-					        account: JSON.parse(body)
-					    });
-					// else redirect to home page
-				    } else res.redirect('/');
+			    	if(body){
+					    if(JSON.parse(body)._id){ 
+					    	//then the user must have an active session
+					    	res.render('admin', {
+						        account: body
+						    });
+						// else redirect to home page
+					    } else res.redirect('/');
+			    	} else res.redirect('/');
 			    }
 			    if (error) {
 			    	// console.log("error");

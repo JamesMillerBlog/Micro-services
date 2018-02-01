@@ -1,5 +1,6 @@
 const passport = require('passport');
 const request = require('request');
+const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
 	// when user comes to this route
@@ -29,12 +30,12 @@ module.exports = (app) => {
 	});
 
 	app.get(
-		'/auth/current_user',
+		'/auth/current_user', requireLogin,
 		(req, res) => {
 		var options = {
 			'method': 'POST',
-	    	'url':'http://localhost/accounts/get-user-data',
-			'proxy':'http://http-load-balancer',
+	    	'url':'http://accounts-api:3000/accounts/get-user-data',
+			// 'proxy':'http://http-load-balancer',
 			form: {
 				profileID: req.user
 			}

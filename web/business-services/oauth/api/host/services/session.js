@@ -6,9 +6,7 @@ const client  = redis.createClient(keys.redisPort,keys.redisHost);
 client.auth(keys.redisPW);
 
 module.exports = (app) => {
-
-	// initialize the session
-	// secret is used for cookie handling
+	// initialize the session, secret is used for cookie handling
 	app.use(session({
 		secret: keys.sessionSecret,
 		store: new redisStore({ host: keys.redisHost, port: keys.redisPort, client: client, ttl:  keys.redisTTL }),

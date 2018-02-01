@@ -25,8 +25,8 @@ passport.deserializeUser((id, done) => {
 
 	request({
     	'method': 'POST',
-		'url':'http://localhost/accounts/get-user-data',
-		'proxy':'http://http-load-balancer',
+		'url':'http://accounts-api:3000/accounts/get-user-data',
+		// 'proxy':'http://http-load-balancer',
 		form: {
 			profileID: id
 		}
@@ -34,7 +34,8 @@ passport.deserializeUser((id, done) => {
 	function (error, response, body) {
 	    if (!error) {
 	    	// console.log("return from accounts mongo");
-	     //    console.log(JSON.parse(body)._id); // return id
+	    	// console.log(body);
+	     //    console.log(JSON.parse(body)); // return id
 	        done(null, JSON.parse(body)._id);
 	    }
 	    if (error) {
@@ -59,8 +60,8 @@ passport.use(
 		//check mongo to search through the users schema and find a google id that == profile id
 		request({
 	    	'method': 'POST',
-			'url':'http://localhost/accounts/find-or-create-user',
-			'proxy':'http://http-load-balancer',
+			'url':'http://accounts-api:3000/accounts/find-or-create-user',
+			// 'proxy':'http://http-load-balancer',
 			form: {
 				googleId: profile.id,
 				googleName: profile.displayName
@@ -71,8 +72,8 @@ passport.use(
 		        done(null, body);
 		    }
 		    if (error) {
-		    	console.log("error");
-		    	console.log(error);
+		    	// console.log("error");
+		    	// console.log(error);
 		    }
 		});
 	})

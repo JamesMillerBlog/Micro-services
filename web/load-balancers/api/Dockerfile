@@ -1,6 +1,16 @@
-# Define from nginx images
-FROM nginx:latest
+# Define the node image
+FROM node:boron
 
-RUN rm /etc/nginx/conf.d/*
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY nginx.conf /etc/nginx/conf.d/
+
+# Install app dependencies
+COPY package.json /usr/src/app/
+
+# Bundle app source
+# COPY . /usr/src/app
+
+# Expose the server on 3000 and 4000
+EXPOSE 3000

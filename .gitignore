@@ -1,6 +1,3 @@
 node_modules
 db
 mongod.log
-.env
-dev.js
-redis.conf
