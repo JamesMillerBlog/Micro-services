@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 // ** SETUP API AUTHENTICATION **//
-// require('./middlewares/authentication')(app);
+require('./middlewares/authentication')(app);
 
 // ** SETUP API GATEWAY **//
 require('./routes/apiGatewayRoutes')(app);

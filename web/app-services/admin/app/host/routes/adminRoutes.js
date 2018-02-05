@@ -16,13 +16,15 @@ module.exports = (app) => {
 			    if (!error) {
 			    	// if cookies exist
 			    	if(body){
+			    		// if '_id' exists within the cookie then
 					    if(JSON.parse(body)._id){ 
 					    	//then the user must have an active session
 					    	res.render('admin', {
 						        account: body
 						    });
-						// else redirect to home page
+						// if '_id' doesn't exist then redirect to home page
 					    } else res.redirect('/');
+					// if cookie doesn't exist then redirect to home page
 			    	} else res.redirect('/');
 			    }
 			    if (error) {
@@ -32,9 +34,5 @@ module.exports = (app) => {
 			}
 		);
 	});
-
-	// app.get('*', (req, res) => {
-	//     res.redirect('/');
-	// })
 }
 

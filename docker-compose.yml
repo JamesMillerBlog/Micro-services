@@ -16,6 +16,7 @@ services:
       - home-app
       - admin-app
 
+
   api-gateway:
     build: ./web/load-balancers/api
     volumes:
